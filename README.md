@@ -23,9 +23,9 @@ A simple web application for browsing articles with a dashboard for managing con
 
 1. Clone the repository:
 
+```bash
 git clone https://github.com/Rifkynur/article-platform.git
 cd article-platform
-```bash
 
 
 npm install
