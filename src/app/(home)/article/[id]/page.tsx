@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import DetailArticle from "@/components/page/DetailArticle/DetailArticle";
 import { Article } from "@/utils/interface";
-import { getDetailArticle } from "@/hook/useGetDetailArticle";
-import { notFound } from "next/navigation";
 import RecomentArticle from "@/components/page/DetailArticle/OtherArticle";
 import { useHandleArticle } from "@/hook/useHandleArticle";
 import { useParams } from "next/navigation";

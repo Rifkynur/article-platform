@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/hook/useAuth";
 import { Toaster } from "@/components/ui/sonner";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   username: z.string().min(1, "Username field cannot be empty"),
@@ -23,6 +24,7 @@ type FormData = z.infer<typeof schema>;
 const page = () => {
   const { register } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -39,6 +41,10 @@ const page = () => {
     await register(data);
     form.reset();
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) return router.push("/");
+  }, []);
   return (
     <section className="h-screen flex justify-center items-center bg-[#f3f4f6]">
       <Toaster position="top-right" />

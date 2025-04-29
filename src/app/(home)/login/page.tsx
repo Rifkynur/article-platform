@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/sonner";
 import { useAuth } from "@/hook/useAuth";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   username: z.string().min(1, "Username field cannot be empty"),
@@ -19,6 +20,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Page = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 
@@ -37,6 +39,11 @@ const Page = () => {
     await login(data);
     form.reset();
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) return router.push("/");
+  }, []);
   return (
     <section className="h-screen flex justify-center items-center bg-[#f3f4f6]">
       <Toaster position="top-right" />

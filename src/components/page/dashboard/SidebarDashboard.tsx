@@ -25,7 +25,7 @@ const SidebarDashboard = () => {
     <>
       <div className={`bg-blue-600 z-30 top-0 bottom-0  py-4 px-3 absolute transition-all duration-200 lg:min-h-screen  lg:static   ${isOpen ? "left-0" : "-left-full"}`}>
         <CircleX className="ms-auto mb-2 text-white lg:hidden" onClick={() => setIsOpen()} />
-        <div className="cursor-pointer" onClick={() => router.push("/dashboard/article")}>
+        <div className="cursor-pointer" onClick={() => router.push("/")}>
           <img src="/asset/Logo.png" alt="logo" />
         </div>
         <ul className="text-white flex flex-col gap-4 mt-10">
@@ -51,7 +51,7 @@ const SidebarDashboard = () => {
       </div>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger className="flex items-center gap-2"></DialogTrigger>
-        <DialogContent>
+        <DialogContent className="lg:w-[400px]">
           <DialogHeader>
             <DialogTitle>Logout</DialogTitle>
             <DialogDescription>Are you sure want to logout? </DialogDescription>

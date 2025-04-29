@@ -62,7 +62,7 @@ const Navbar = () => {
 
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
           <DialogTrigger className="flex items-center gap-2"></DialogTrigger>
-          <DialogContent>
+          <DialogContent className="lg:w-[400px]">
             <DialogHeader>
               <DialogTitle>Logout</DialogTitle>
               <DialogDescription>Are you sure want to logout? </DialogDescription>
