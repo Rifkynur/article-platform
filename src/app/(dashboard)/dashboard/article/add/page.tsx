@@ -55,6 +55,11 @@ const Page = () => {
       image: undefined,
     },
   });
+
+  const handleCancel = () => {
+    form.reset();
+    router.push("/dashboard/article");
+  };
   const handlePreview = async () => {
     const isValid = await form.trigger();
     if (!isValid) {
@@ -200,7 +205,7 @@ const Page = () => {
           />
 
           <div className="flex w-full gap-2 justify-end">
-            <Button type="button" variant={"outline"}>
+            <Button type="button" variant={"outline"} onClick={handleCancel}>
               Cancel
             </Button>
             <Button type="button" variant={"secondary"} onClick={handlePreview}>

@@ -1,13 +1,21 @@
 "use client";
 import React, { useState } from "react";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useHandleCategory } from "@/hook/useHandeCategory";
 import DeleteCatagoryModal from "./DeleteCatagoryModal";
 import EditCategoryModal from "./EditCategoryModal";
+import { Category } from "@/utils/interface";
 
-const TableCategory = () => {
-  const { allCategory, getAllCategory } = useHandleCategory();
+interface TableCategory {
+  filteredCategory: Category[];
+  handlePageChange: (newPage: number) => void;
+  pagination: {
+    page: number;
+    totalPages: number;
+    limit: number;
+  };
+}
+const TableCategory = ({ filteredCategory, handlePageChange, pagination }: TableCategory) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
@@ -39,7 +47,7 @@ const TableCategory = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {allCategory.map((data) => {
+          {filteredCategory.map((data) => {
             return (
               <TableRow key={data.id}>
                 <TableCell className="w-[225px] text-sm  text-center text-slate-600">{data.name}</TableCell>
@@ -59,6 +67,33 @@ const TableCategory = () => {
           })}
         </TableBody>
       </Table>
+      {filteredCategory.length > 0 && (
+        <div className="flex justify-center mt-8 py-4">
+          <nav>
+            <ul className="flex space-x-4">
+              <li>
+                <button onClick={() => handlePageChange(pagination.page - 1)} disabled={pagination.page === 1}>
+                  Previous
+                </button>
+              </li>
+
+              {[...Array(pagination.totalPages).keys()].map((pageNum) => (
+                <li key={pageNum + 1}>
+                  <button onClick={() => handlePageChange(pageNum + 1)} className={`${pagination.page === pageNum + 1 ? "font-bold bg-gray-200" : ""} px-2`}>
+                    {pageNum + 1}
+                  </button>
+                </li>
+              ))}
+
+              <li>
+                <button onClick={() => handlePageChange(pagination.page + 1)} disabled={pagination.page === pagination.totalPages}>
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      )}
       <DeleteCatagoryModal categoryId={selectedCategoryId} categoryName={selectedCategoryName} open={deleteModalOpen} onOpenChange={setDeleteModalOpen} onDeleteSuccess={handleOnSuccess} />
       <EditCategoryModal categoryId={selectedCategoryId} categoryName={selectedCategoryName} open={editModalOpen} onOpenChange={setEditModalOpen} onEditSuccess={handleOnSuccess} />
     </>

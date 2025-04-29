@@ -44,7 +44,7 @@ const AddCategoryModal = ({ open, onOpenChange }: AddCategoryModalProps) => {
     <>
       <Toaster position="top-right" />
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent>
+        <DialogContent className="lg:w-[400px]">
           <DialogHeader>
             <DialogTitle>Add Cagegory</DialogTitle>
           </DialogHeader>

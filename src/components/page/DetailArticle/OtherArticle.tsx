@@ -2,20 +2,21 @@
 import React from "react";
 import ContentArticleCard from "../listArticel/contentArticel/ContentArticleCard";
 import { useHandleArticle } from "@/hook/useHandleArticle";
+import { Article } from "@/utils/interface";
 
-type OtherArticle = {
-  articleCategory: string;
+type RecomentArticle = {
+  articles: Article[];
 };
-const OtherArticle = ({ articleCategory }: OtherArticle) => {
-  const { recomentArticles, getRecomentArticle } = useHandleArticle();
+const RecomentArticle = ({ articles }: RecomentArticle) => {
   return (
-    <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 conatainer">
-      bisa
-      {/* <ContentArticleCard />
-      <ContentArticleCard />
-      <ContentArticleCard /> */}
+    <div className="container pb-10">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 conatainer">
+        {articles.map((article) => {
+          return <ContentArticleCard key={article.id} content={article.content} createdArticle={article.updatedAt} title={article.title} category={article.category} />;
+        })}
+      </div>
     </div>
   );
 };
 
-export default OtherArticle;
+export default RecomentArticle;

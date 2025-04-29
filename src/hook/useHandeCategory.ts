@@ -15,6 +15,7 @@ interface EditCategory {
 }
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 export const useHandleCategory = () => {
   const [allCategory, setAllCategory] = useState<Category[]>([]);
   const [token, setToken] = useState<string | null>(null);
@@ -36,7 +37,7 @@ export const useHandleCategory = () => {
 
   const addCategory = async (data: AddCategory) => {
     try {
-      const response = await axios.post(`https://test-fe.mysellerpintar.com/api/categories`, data, {
+      const response = await axios.post(`${apiUrl}categories`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -61,7 +62,7 @@ export const useHandleCategory = () => {
 
   const editCategory = async (data: EditCategory) => {
     try {
-      const response = await axios.put(`https://test-fe.mysellerpintar.com/api/categories/${data.id}`, data, {
+      const response = await axios.put(`${apiUrl}categories/${data.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,7 +87,7 @@ export const useHandleCategory = () => {
 
   const deteleCategory = async (id: string) => {
     try {
-      const response = await axios.delete(`https://test-fe.mysellerpintar.com/api/categories/${id}`, {
+      const response = await axios.delete(`${apiUrl}categories/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

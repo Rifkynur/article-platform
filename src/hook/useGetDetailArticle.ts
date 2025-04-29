@@ -1,5 +1,7 @@
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 export const getDetailArticle = async (id: string) => {
-  const res = await fetch(`https://test-fe.mysellerpintar.com/api/articles/${id}`, {
+  const res = await fetch(`${apiUrl}articles/${id}`, {
     method: "GET",
     cache: "no-store",
   });

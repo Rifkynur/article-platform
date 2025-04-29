@@ -2,9 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Article, Category } from "@/utils/interface";
-import { useAuthStore } from "@/app/store/useAuthstore";
 import { toast } from "sonner";
-import { useDebounce } from "use-debounce";
 
 interface AddArticle {
   title: string;
@@ -14,41 +12,20 @@ interface AddArticle {
   image?: File;
   category: string;
 }
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 export const useHandleArticle = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [recomentArticles, setRecomentArticles] = useState<Article[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [articleById, setArticleById] = useState<Article>();
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
-
-  const getRecomentArticle = (categoryName: string) => {
-    try {
-      setLoading(true);
-
-      const allArticles = articles;
-
-      const filteredArticles = allArticles.filter((article: Article) => article.category.name === categoryName).slice(0, 3);
-
-      setRecomentArticles(filteredArticles);
-      console.log(filteredArticles);
-    } catch (err) {
-      setError("Failed to fetch recommended articles");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getArticleById = async (id: string) => {
     try {
       setLoading(true);
       const response = await axios.get(`https://test-fe.mysellerpintar.com/api/articles/${id}`);
       setArticleById(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -177,8 +154,6 @@ export const useHandleArticle = () => {
     }
   }, []);
   return {
-    getRecomentArticle,
-    recomentArticles,
     getArticleById,
     articleById,
     addArticle,

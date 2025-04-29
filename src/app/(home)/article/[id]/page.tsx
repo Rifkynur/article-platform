@@ -1,31 +1,48 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import DetailArticle from "@/components/page/DetailArticle/DetailArticle";
 import { Article } from "@/utils/interface";
 import { getDetailArticle } from "@/hook/useGetDetailArticle";
 import { notFound } from "next/navigation";
-import OtherArticle from "@/components/page/DetailArticle/OtherArticle";
+import RecomentArticle from "@/components/page/DetailArticle/OtherArticle";
+import { useHandleArticle } from "@/hook/useHandleArticle";
+import { useParams } from "next/navigation";
+import axios from "axios";
 
-interface DetailArticleProps {
-  params: { id: string };
-}
-export default async function Page(props: DetailArticleProps) {
-  const { params } = props;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const page = () => {
+  const [recommendArticles, setRecommendArticles] = useState<Article[]>([]);
+  const { id } = useParams();
+  const { articleById, getArticleById } = useHandleArticle();
 
-  if (!params?.id) {
-    notFound();
-  }
+  const getRecomendArticle = async () => {
+    if (!articleById) return;
 
-  try {
-    const article: Article = await getDetailArticle(params.id);
-    return (
-      <>
-        <DetailArticle article={article} />
-        {/* <OtherArticle articleCategory={article.category.name} /> */}
-      </>
-    );
-  } catch (error) {
-    notFound();
-  }
-}
+    try {
+      const response = await axios.get(`${apiUrl}articles`);
+      const data: Article[] = response.data.data;
+      const filtered = data.filter((article) => article.category.name === articleById.category.name && article.id !== articleById.id).slice(0, 3);
 
-// export default Page;
+      setRecommendArticles(filtered);
+    } catch (error) {
+      console.error("Failed to fetch articles:", error);
+    }
+  };
+  useEffect(() => {
+    if (id) {
+      getArticleById(id as string);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    getRecomendArticle();
+  }, [articleById]);
+  return (
+    <>
+      {articleById && <DetailArticle article={articleById} />}
+      <RecomentArticle articles={recommendArticles} />
+    </>
+  );
+};
+
+export default page;

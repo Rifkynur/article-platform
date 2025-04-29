@@ -20,9 +20,11 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1, limit: 10 });
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const getAllArticle = async () => {
     try {
-      const response = await axios.get("https://test-fe.mysellerpintar.com/api/articles/", {
+      const response = await axios.get(`${apiUrl}articles/`, {
         params: {
           page: pagination.page,
         },
@@ -76,7 +78,6 @@ export default function Home() {
 
   useEffect(() => {
     getFilterArticle();
-    console.log(filteredArticles);
   }, [searchQuery, selectedCategory]);
 
   return (

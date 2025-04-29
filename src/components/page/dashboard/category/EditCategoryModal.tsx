@@ -7,7 +7,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuthStore } from "@/app/store/useAuthstore";
 import { Toaster } from "@/components/ui/sonner";
 import { useHandleCategory } from "@/hook/useHandeCategory";
 
@@ -50,7 +49,7 @@ const EditCategoryModal = ({ open, onOpenChange, categoryId, categoryName, onEdi
     <>
       <Toaster position="top-right" />
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent>
+        <DialogContent className="lg:w-[400px]">
           <DialogHeader>
             <DialogTitle>Edit Cagegory</DialogTitle>
           </DialogHeader>

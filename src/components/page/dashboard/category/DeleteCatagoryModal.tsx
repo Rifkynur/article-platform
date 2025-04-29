@@ -23,7 +23,7 @@ const DeleteCatagoryModal = ({ open, onOpenChange, categoryId, categoryName, onD
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogTrigger className="flex items-center gap-2"></DialogTrigger>
-        <DialogContent>
+        <DialogContent className="lg:w-[400px]">
           <DialogHeader>
             <DialogTitle>Delete Category</DialogTitle>
             <DialogDescription>Delete category “{categoryName}”? This will remove it from master data permanently. </DialogDescription>

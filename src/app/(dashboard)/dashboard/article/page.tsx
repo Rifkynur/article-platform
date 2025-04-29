@@ -14,9 +14,10 @@ const Page = () => {
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1, limit: 10 });
   const [totalArticle, setTotalArticle] = useState<number>();
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const getAllArticle = async () => {
     try {
-      const response = await axios.get("https://test-fe.mysellerpintar.com/api/articles/", {
+      const response = await axios.get(`${apiUrl}articles/`, {
         params: {
           page: pagination.page,
         },

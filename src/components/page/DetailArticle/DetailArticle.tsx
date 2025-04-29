@@ -14,7 +14,7 @@ const DetailArticle = ({ article }: DetailCard) => {
         <div className="flex flex-col gap-6  lg:gap-10">
           <div className="text-center ">
             <p className="mb-4 text-slate-600 text-sm">
-              {dateFormater(article.updatedAt)} &middot; Created by {article.user?.username}
+              {article.updatedAt ? dateFormater(article.updatedAt) : ""} &middot; Created by {article.user?.username}
             </p>
             <h1 className="text-slate-900 text-2xl font-semibold w-[335px] mx-auto md:w-[420px] lg:w-[642px] lg:text-3xl">{article.title}</h1>
           </div>
@@ -23,7 +23,6 @@ const DetailArticle = ({ article }: DetailCard) => {
           </div>
           <div className="prose prose-sm sm:prose lg:prose-lg xl:prose-xl" dangerouslySetInnerHTML={{ __html: article.content }}></div>
         </div>
-        {/* <OtherArticle articleCategory={article.category.name} /> */}
       </div>
     </section>
   );
