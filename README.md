@@ -32,7 +32,7 @@ npm install
 # or
 yarn install
 
-cp .envExample to .env
+cp .envExample  .env
 
 npm run dev
 # or
