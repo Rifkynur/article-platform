@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # article-platform
 
 A simple web application for browsing articles with a dashboard for managing content.
@@ -18,6 +17,7 @@ A simple web application for browsing articles with a dashboard for managing con
 - TypeScript
 - Zustand (state management)
 - Axios
+- Lucide Icons
 
 ## Getting Started
 
@@ -32,14 +32,12 @@ npm install
 # or
 yarn install
 
-change .envExample to .env
+cp .envExample to .env
 
 npm run dev
 # or
 yarn dev
+```
 
 open browser and visit
 http://localhost:3000
-
-
->>>>>>> 6fab4a3ffc7536794020ee0e9a78e61ab2530ea9
