@@ -1,0 +1,188 @@
+"use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Article, Category } from "@/utils/interface";
+import { useAuthStore } from "@/app/store/useAuthstore";
+import { toast } from "sonner";
+import { useDebounce } from "use-debounce";
+
+interface AddArticle {
+  title: string;
+  userId?: string;
+  content: string;
+  imageUrl?: string;
+  image?: File;
+  category: string;
+}
+export const useHandleArticle = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [recomentArticles, setRecomentArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [articleById, setArticleById] = useState<Article>();
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
+  const getRecomentArticle = (categoryName: string) => {
+    try {
+      setLoading(true);
+
+      const allArticles = articles;
+
+      const filteredArticles = allArticles.filter((article: Article) => article.category.name === categoryName).slice(0, 3);
+
+      setRecomentArticles(filteredArticles);
+      console.log(filteredArticles);
+    } catch (err) {
+      setError("Failed to fetch recommended articles");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getArticleById = async (id: string) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`https://test-fe.mysellerpintar.com/api/articles/${id}`);
+      setArticleById(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addArticle = async (data: AddArticle) => {
+    try {
+      let imageUrl = "";
+
+      if (data.image) {
+        const formData = new FormData();
+        formData.append("image", data.image);
+
+        const upload = await axios.post(`https://test-fe.mysellerpintar.com/api/upload`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        imageUrl = upload.data.imageUrl;
+      }
+
+      const articlePayload = {
+        title: data.title,
+        userId: data.userId,
+        categoryId: data.category,
+        content: data.content,
+        imageUrl: imageUrl,
+      };
+
+      const response = await axios.post(`https://test-fe.mysellerpintar.com/api/articles`, articlePayload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Berhasil Menghapus Article", {
+        style: {
+          backgroundColor: "#34D399",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      toast.error("Gagal Membuat Article", {
+        style: {
+          backgroundColor: "#DC2626",
+          color: "#fff",
+        },
+      });
+      console.log(error);
+    }
+  };
+
+  const editArticle = async (data: AddArticle, id: string) => {
+    try {
+      let imageUrl = data.imageUrl;
+
+      if (data.image) {
+        const formData = new FormData();
+        formData.append("image", data.image);
+
+        const upload = await axios.post(`https://test-fe.mysellerpintar.com/api/upload`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        imageUrl = upload.data.imageUrl;
+      }
+
+      const articlePayload = {
+        title: data.title,
+        userId: data.userId,
+        categoryId: data.category,
+        content: data.content,
+        imageUrl: imageUrl,
+      };
+      const response = await axios.put(`https://test-fe.mysellerpintar.com/api/articles/${id}`, articlePayload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Berhasil Mengupdate Article", {
+        style: {
+          backgroundColor: "#34D399",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      toast.error("Gagal Mengupdate Article", {
+        style: {
+          backgroundColor: "#DC2626",
+          color: "#fff",
+        },
+      });
+      console.log(error);
+    }
+  };
+
+  const deleteArticle = async (id: string) => {
+    try {
+      const response = await axios.delete(`https://test-fe.mysellerpintar.com/api/articles/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Berhasil Menghapus Article", {
+        style: {
+          backgroundColor: "#34D399",
+          color: "#fff",
+        },
+      });
+    } catch (error) {
+      toast.error("Gagal Menghapus Article", {
+        style: {
+          backgroundColor: "#DC2626",
+          color: "#fff",
+        },
+      });
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("token");
+      setToken(storedToken);
+    }
+  }, []);
+  return {
+    getRecomentArticle,
+    recomentArticles,
+    getArticleById,
+    articleById,
+    addArticle,
+    deleteArticle,
+    editArticle,
+  };
+};
