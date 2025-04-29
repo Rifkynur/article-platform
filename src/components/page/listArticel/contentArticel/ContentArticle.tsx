@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ContentArticleCard from "./ContentArticleCard";
 import { Article } from "@/utils/interface";
 
@@ -18,9 +18,7 @@ const ContentArticle = ({ filteredArticles, handlePageChange, pagination }: Cont
       <div className="container">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           {filteredArticles.length > 0 ? (
-            filteredArticles.map((article, index) => (
-              <ContentArticleCard key={article.id} category={article.category} createdArticle={article.updatedAt} title={article.title} id={article.id} content={article.content} image={article.imageUrl} />
-            ))
+            filteredArticles.map((article) => <ContentArticleCard key={article.id} category={article.category} createdArticle={article.updatedAt} title={article.title} id={article.id} content={article.content} image={article.imageUrl} />)
           ) : (
             <p>No articles found.</p>
           )}

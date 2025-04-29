@@ -6,7 +6,6 @@ import axios from "axios";
 import { Article } from "@/utils/interface";
 
 const Page = () => {
-  const [isClient, setIsClient] = useState(false);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");

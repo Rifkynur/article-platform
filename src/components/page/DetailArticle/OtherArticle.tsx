@@ -1,7 +1,6 @@
 "use clent";
 import React from "react";
 import ContentArticleCard from "../listArticel/contentArticel/ContentArticleCard";
-import { useHandleArticle } from "@/hook/useHandleArticle";
 import { Article } from "@/utils/interface";
 
 type RecomentArticle = {

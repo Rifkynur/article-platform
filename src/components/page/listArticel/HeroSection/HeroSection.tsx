@@ -40,7 +40,7 @@ const HeroSection = ({ searchQuery, setSearchQuery, setSelectedCategory }: HeroS
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
-              {allCategory.map((data, index) => {
+              {allCategory.map((data) => {
                 return (
                   <SelectItem value={data.name} key={data.id}>
                     {data.name}

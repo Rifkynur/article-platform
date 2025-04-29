@@ -5,7 +5,7 @@ import { Category } from "@/utils/interface";
 import { dateFormater, cleanTextAndLimitWords } from "@/utils/utils";
 
 type ContentArticleProps = {
-  id?: String;
+  id?: string;
   image?: string;
   createdArticle: Date | string;
   category?: Category;

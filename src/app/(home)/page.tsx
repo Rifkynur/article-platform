@@ -1,19 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../store/useAuthstore";
 import HeroSection from "@/components/page/listArticel/HeroSection/HeroSection";
 import ContentArticle from "@/components/page/listArticel/contentArticel/ContentArticle";
 import { useGetUser } from "@/hook/useGetUser";
-import { useHandleArticle } from "@/hook/useHandleArticle";
 import { Article } from "@/utils/interface";
 import axios from "axios";
 
 export default function Home() {
   const { getUser } = useGetUser();
   const router = useRouter();
-  const { setLogout, user, setUser, clearUser } = useAuthStore();
-  const [isClient, setIsClient] = useState(false);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");

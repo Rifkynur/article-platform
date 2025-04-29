@@ -17,6 +17,7 @@ import { useHandleArticle } from "@/hook/useHandleArticle";
 import { useHandleCategory } from "@/hook/useHandeCategory";
 import { useAuthStore } from "@/app/store/useAuthstore";
 import ArticlePreview from "@/components/page/dashboard/article/ArticlePreview";
+import Image from "next/image";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Please enter title" }),
@@ -120,7 +121,7 @@ const Page = () => {
                 <FormLabel>Upload Image</FormLabel>
                 <FormControl>
                   <div className="relative px-3 bg-white w-48 h-36 border border-dashed border-gray-400 rounded-md lg:h-40 lg:w-52">
-                    {imagePreview && <img src={imagePreview} alt="Preview" className="absolute inset-0 w-full h-full object-cover rounded-md cursor-pointer" onClick={handleImageClick} />}
+                    {imagePreview && <Image src={imagePreview} layout="responsive" width={300} height={250} alt="Preview" className="absolute inset-0 w-full h-full object-cover rounded-md cursor-pointer" onClick={handleImageClick} />}
 
                     <input
                       type="file"
@@ -205,7 +206,7 @@ const Page = () => {
           <FormField
             control={form.control}
             name="content"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>

@@ -2,7 +2,7 @@ import React from "react";
 
 type ProfileInfoProps = {
   title?: string;
-  desc?: String;
+  desc?: string;
 };
 const ProfileInfo = ({ title, desc }: ProfileInfoProps) => {
   return (

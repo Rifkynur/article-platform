@@ -41,7 +41,7 @@ const Navbar = () => {
       <nav className={clsx("py-5 bg-white sticky top-0 lg:fixed  lg:left-0 lg:right-0 z-20 ", isScroll ? "lg:white lg:shadow-md" : "lg:bg-transparent")}>
         <div className="container flex justify-between items-center">
           <Link href={"/"} className="w-[122px]">
-            <img src="/asset/frame.png" alt="icon" className="object-cover" />
+            <img src="/asset/Frame.png" alt="icon" className="object-cover" />
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

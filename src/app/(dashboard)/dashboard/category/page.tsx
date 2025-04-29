@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import FilterCategory from "@/components/page/dashboard/category/FilterCategory";
 import TableCategory from "@/components/page/dashboard/category/TableCategory";
-import { useHandleCategory } from "@/hook/useHandeCategory";
 import { Category } from "@/utils/interface";
 import axios from "axios";
 

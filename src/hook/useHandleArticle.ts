@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Article, Category } from "@/utils/interface";
+import { Article } from "@/utils/interface";
 import { toast } from "sonner";
 
 interface AddArticle {
@@ -17,14 +17,11 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const useHandleArticle = () => {
   const [articleById, setArticleById] = useState<Article>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   const getArticleById = async (id: string) => {
     try {
-      setLoading(true);
-      const response = await axios.get(`https://test-fe.mysellerpintar.com/api/articles/${id}`);
+      const response = await axios.get(`${apiUrl}articles/${id}`);
       setArticleById(response.data);
     } catch (error) {
       console.log(error);
@@ -55,7 +52,7 @@ export const useHandleArticle = () => {
         imageUrl: imageUrl,
       };
 
-      const response = await axios.post(`https://test-fe.mysellerpintar.com/api/articles`, articlePayload, {
+      await axios.post(`https://test-fe.mysellerpintar.com/api/articles`, articlePayload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -101,7 +98,7 @@ export const useHandleArticle = () => {
         content: data.content,
         imageUrl: imageUrl,
       };
-      const response = await axios.put(`https://test-fe.mysellerpintar.com/api/articles/${id}`, articlePayload, {
+      await axios.put(`https://test-fe.mysellerpintar.com/api/articles/${id}`, articlePayload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -125,7 +122,7 @@ export const useHandleArticle = () => {
 
   const deleteArticle = async (id: string) => {
     try {
-      const response = await axios.delete(`https://test-fe.mysellerpintar.com/api/articles/${id}`, {
+      await axios.delete(`https://test-fe.mysellerpintar.com/api/articles/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface SidebarDashboard {
-  isOpen: Boolean;
+  isOpen: boolean;
   setIsOpen: () => void;
 }
 

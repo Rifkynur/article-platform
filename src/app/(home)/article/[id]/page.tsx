@@ -7,7 +7,7 @@ import { useHandleArticle } from "@/hook/useHandleArticle";
 import { useParams } from "next/navigation";
 import axios from "axios";
 
-const page = () => {
+const Page = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [recommendArticles, setRecommendArticles] = useState<Article[]>([]);
   const { id } = useParams();
@@ -43,4 +43,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

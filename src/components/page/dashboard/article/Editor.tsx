@@ -53,10 +53,11 @@ export function Editor({ value, onChange }: EditorProps) {
       <div className="flex gap-2 mb-2 flex-wrap">
         <div>
           <Button type="button" variant="outline" size="sm" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()}>
-            Undo
+            <Undo />
           </Button>
           <Button type="button" variant="outline" size="sm" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()}>
             Redo
+            <Redo />
           </Button>
         </div>
         <div>

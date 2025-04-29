@@ -9,11 +9,11 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const useAuth = () => {
   interface loginPayload {
-    username: String;
-    password: String;
+    username: string;
+    password: string;
   }
   interface registerPayload extends loginPayload {
-    role: String;
+    role: string;
   }
 
   const { setLogin, setLogout } = useAuthStore();
@@ -54,7 +54,7 @@ export const useAuth = () => {
 
   const register = async (data: registerPayload) => {
     try {
-      const response = await axios.post(`${apiUrl}auth/register`, data);
+      await axios.post(`${apiUrl}auth/register`, data);
       toast.success("Register Berhasil", {
         style: {
           backgroundColor: "#34D399",

@@ -21,7 +21,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const page = () => {
+const Page = () => {
   const { register } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
@@ -125,4 +125,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

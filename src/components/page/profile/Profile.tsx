@@ -7,8 +7,8 @@ import { useAuthStore } from "@/app/store/useAuthstore";
 import { getInitial } from "@/utils/utils";
 
 interface Profile {
-  link: String;
-  goTo: String;
+  link: string;
+  goTo: string;
 }
 const Profile = ({ link, goTo }: Profile) => {
   const { user } = useAuthStore();

@@ -37,7 +37,7 @@ export const useHandleCategory = () => {
 
   const addCategory = async (data: AddCategory) => {
     try {
-      const response = await axios.post(`${apiUrl}categories`, data, {
+      await axios.post(`${apiUrl}categories`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,7 +62,7 @@ export const useHandleCategory = () => {
 
   const editCategory = async (data: EditCategory) => {
     try {
-      const response = await axios.put(`${apiUrl}categories/${data.id}`, data, {
+      await axios.put(`${apiUrl}categories/${data.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -87,7 +87,7 @@ export const useHandleCategory = () => {
 
   const deteleCategory = async (id: string) => {
     try {
-      const response = await axios.delete(`${apiUrl}categories/${id}`, {
+      await axios.delete(`${apiUrl}categories/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

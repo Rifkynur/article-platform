@@ -18,7 +18,7 @@ export const useGetUser = () => {
       });
       setUser(response.data);
     } catch (error) {
-      console.log(token);
+      console.log(error);
       setLogout();
       router.push("/login");
     }

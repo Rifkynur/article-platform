@@ -1,8 +1,6 @@
 import React from "react";
-import OtherArticle from "./OtherArticle";
 import { Article } from "@/utils/interface";
 import { dateFormater } from "@/utils/utils";
-// import DOMPurify from "dompurify";
 
 interface DetailCard {
   article: Article;
