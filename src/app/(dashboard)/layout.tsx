@@ -1,10 +1,14 @@
 import SidebarDashboard from "@/components/page/dashboard/SidebarDashboard";
 import NavbarDashboard from "@/components/page/dashboard/NavbarDashboard";
 import "../globals.css";
+import Head from "next/head";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
+      <Head>
+        <title>Article | Dashboard</title>
+      </Head>
       <body className=" mx-auto ">
         <div className="flex relative">
           <SidebarDashboard />

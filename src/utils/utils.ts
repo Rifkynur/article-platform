@@ -22,6 +22,23 @@ export const dateFormater = (date: string | Date) => {
   }).format(parsedDate);
 };
 
+export const detailDateFormatter = (date: string | Date) => {
+  const parsedDate = new Date(date);
+
+  if (isNaN(parsedDate.getTime())) {
+    return "Invalid Date";
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(parsedDate);
+};
+
 export const cleanTextAndLimitWords = (htmlString: string, wordLimit = 20) => {
   const textWithoutTags = htmlString.replace(/<[^>]*>/g, "");
 

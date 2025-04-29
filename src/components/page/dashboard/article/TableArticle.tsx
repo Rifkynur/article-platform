@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useHandleArticle } from "@/hook/useHandleArticle";
 import { Toaster } from "@/components/ui/sonner";
 import { Article } from "@/utils/interface";
+import { detailDateFormatter } from "@/utils/utils";
 
 interface TableArticle {
   filteredArticles: Article[];
@@ -56,7 +57,7 @@ const TableArticle = ({ filteredArticles, handlePageChange, pagination }: TableA
                 </TableCell>
                 <TableCell className="whitespace-normal w-[225px] text-sm text-center text-slate-600">{data.title}</TableCell>
                 <TableCell className="w-[225px] text-sm  text-center text-slate-600">{data.category?.name}</TableCell>
-                <TableCell className="w-[225px] text-sm  text-center text-slate-600">April 13, 2025 10:55:12</TableCell>
+                <TableCell className="w-[225px] text-sm  text-center text-slate-600">{detailDateFormatter(data.updatedAt)}</TableCell>
                 <TableCell className="flex items-center justify-center w-full h-full">
                   <Button asChild variant={"link"} className="text-blue-600">
                     <Link href={`/article/${data.id}`}>Preview</Link>

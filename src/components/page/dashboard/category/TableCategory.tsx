@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import DeleteCatagoryModal from "./DeleteCatagoryModal";
 import EditCategoryModal from "./EditCategoryModal";
 import { Category } from "@/utils/interface";
+import { detailDateFormatter } from "@/utils/utils";
 
 interface TableCategory {
   filteredCategory: Category[];
@@ -51,7 +52,7 @@ const TableCategory = ({ filteredCategory, handlePageChange, pagination }: Table
             return (
               <TableRow key={data.id}>
                 <TableCell className="w-[225px] text-sm  text-center text-slate-600">{data.name}</TableCell>
-                <TableCell className="w-[225px] text-sm  text-center text-slate-600">April 13, 2025 10:55:12</TableCell>
+                <TableCell className="w-[225px] text-sm  text-center text-slate-600">{data.updatedAt && detailDateFormatter(data.updatedAt)}</TableCell>
                 <TableCell className="flex items-center justify-center w-full h-full">
                   <div>
                     <Button variant={"link"} className="text-blue-600" onClick={() => openEditModal(data.id, data.name)}>
