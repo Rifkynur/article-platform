@@ -6,7 +6,6 @@ import ContentArticle from "@/components/page/listArticel/contentArticel/Content
 import { Article } from "@/utils/interface";
 import axios from "axios";
 import { useDebounce } from "use-debounce";
-import { useAuthStore } from "../store/useAuthstore";
 
 export default function Home() {
   const router = useRouter();
@@ -18,13 +17,18 @@ export default function Home() {
   const [searchDebounce] = useDebounce(searchQuery, 500);
   const [selectDebounce] = useDebounce(selectedCategory, 500);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { user } = useAuthStore();
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  interface articleParams {
+    page: string | number;
+    limit: string | number;
+    title?: string;
+    category?: string;
+  }
   const getAllArticle = async () => {
     try {
-      const params: any = {
+      const params: articleParams = {
         page: pagination.page,
         limit: pagination.limit,
       };

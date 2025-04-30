@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { useHandleCategory } from "@/hook/useHandeCategory";
-import { useDebounce } from "use-debounce";
 
 interface HeroSection {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;

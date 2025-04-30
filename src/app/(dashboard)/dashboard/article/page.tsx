@@ -18,11 +18,18 @@ const Page = () => {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  interface articleParams {
+    page: string | number;
+    limit: string | number;
+    title?: string;
+    category?: string;
+  }
   const getAllArticle = async () => {
     try {
-      const params: any = {
+      const params: articleParams = {
         page: pagination.page,
         limit: pagination.limit,
+        title: "",
       };
 
       if (searchQuery) {

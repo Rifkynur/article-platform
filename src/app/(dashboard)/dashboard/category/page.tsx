@@ -15,9 +15,14 @@ const Page = () => {
   const [searchDebounce] = useDebounce(searchQuery, 500);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  interface categoryParams {
+    page: string | number;
+    limit: string | number;
+    search?: string;
+  }
   const getAllCategory = async () => {
     try {
-      const params: any = {
+      const params: categoryParams = {
         page: pagination.page,
         limit: pagination.limit,
       };

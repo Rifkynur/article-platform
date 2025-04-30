@@ -17,7 +17,7 @@ export const useAuth = () => {
   }
   const router = useRouter();
 
-  const { setLogin, setLogout, setUser, user } = useAuthStore((state) => state);
+  const { setLogin, setLogout, setUser } = useAuthStore((state) => state);
 
   const login = async (data: loginPayload) => {
     try {
