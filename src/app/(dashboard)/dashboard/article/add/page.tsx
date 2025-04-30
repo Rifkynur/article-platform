@@ -81,9 +81,6 @@ const Page = () => {
     const completeData = { ...data, userId: user?.id };
     addArticle(completeData);
     form.reset();
-    setTimeout(() => {
-      router.push("/dashboard/article");
-    }, 1000);
   };
 
   const handleImageClick = () => {
