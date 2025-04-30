@@ -10,9 +10,7 @@ interface DetailCard {
 const DetailArticle = ({ article, isLoading }: DetailCard) => {
   return (
     <>
-      {isLoading ? (
-        <DetailArticleSkeleton />
-      ) : (
+      {!isLoading ? (
         <section className="container py-10 lg:py-28 min-h-screen">
           <div className="max-w-[1120px]">
             <div className="flex flex-col gap-6  lg:gap-10">
@@ -29,6 +27,8 @@ const DetailArticle = ({ article, isLoading }: DetailCard) => {
             </div>
           </div>
         </section>
+      ) : (
+        <DetailArticleSkeleton />
       )}
     </>
   );

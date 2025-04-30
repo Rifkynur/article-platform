@@ -16,7 +16,7 @@ interface FilterArticle {
 const FilterArticle = ({ searchQuery, setSearchQuery, setSelectedCategory }: FilterArticle) => {
   const { allCategory } = useHandleCategory();
   return (
-    <div className="p-2 bg-gray-50 border-t border-slate-200 flex items-center justify-between gap-3">
+    <div className="p-2 bg-gray-50 border-t border-slate-200 flex items-center justify-between gap-3 lg:p-6">
       <div className="flex items-center gap-0.5">
         <Select onValueChange={(value) => setSelectedCategory(value)}>
           <SelectTrigger className="w-[80px] md:w-28">
@@ -33,13 +33,13 @@ const FilterArticle = ({ searchQuery, setSearchQuery, setSelectedCategory }: Fil
           </SelectContent>
         </Select>
         <div className="flex items-center border rounded-lg px-2 md:w-56">
-          <Search className="size-3.5" />
+          <Search className="size-4 lg:size-5" />
           <Input className="border-none outline-none bg-transparent shadow-none text-sm" placeholder="search by title" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
       </div>
-      <Button className="bg-blue-600 hover:bg-blue-900 text-xs" asChild>
+      <Button className="bg-blue-600 hover:bg-blue-900 text-xs lg:text-sm" asChild>
         <Link href={"/dashboard/article/add"}>
-          <Plus />
+          <Plus className="size-4 lg:size-5" />
           Add Article
         </Link>
       </Button>

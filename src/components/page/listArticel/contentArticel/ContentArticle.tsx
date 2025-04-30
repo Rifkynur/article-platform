@@ -14,8 +14,9 @@ interface ContentArticleProps {
   };
   totalData: number;
   isLoading: boolean;
+  link: string;
 }
-const ContentArticle = ({ filteredArticles, handlePageChange, pagination, totalData, isLoading }: ContentArticleProps) => {
+const ContentArticle = ({ filteredArticles, handlePageChange, pagination, totalData, isLoading, link }: ContentArticleProps) => {
   return (
     <section className="py-5 md:py-10 min-h-screen">
       <div className="container">
@@ -25,7 +26,9 @@ const ContentArticle = ({ filteredArticles, handlePageChange, pagination, totalD
               return <ContentArticleCardSkeleton key={index} />;
             })
           ) : filteredArticles.length > 0 ? (
-            filteredArticles.map((article) => <ContentArticleCard key={article.id} category={article.category} createdArticle={article.updatedAt} title={article.title} id={article.id} content={article.content} image={article.imageUrl} />)
+            filteredArticles.map((article) => (
+              <ContentArticleCard key={article.id} category={article.category} createdArticle={article.updatedAt} title={article.title} id={article.id} content={article.content} image={article.imageUrl} link={link} />
+            ))
           ) : (
             <div className="flex flex-col items-center justify-center col-span-1 md:col-span-2 lg:col-span-3 w-full">
               <div className="md:w-[500px]">

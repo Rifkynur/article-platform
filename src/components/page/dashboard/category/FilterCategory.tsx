@@ -12,7 +12,7 @@ interface FilterCategory {
 const FilterCategory = ({ searchQuery, setSearchQuery }: FilterCategory) => {
   const [addCategoryModal, setAddCategoryModal] = useState(false);
   return (
-    <div className="p-2 w-full bg-gray-50 border-t border-slate-200 flex items-center justify-between gap-3 lg:p-4">
+    <div className="p-2 w-full bg-gray-50 border-t border-slate-200 flex items-center justify-between gap-3 lg:p-6">
       <div className="flex items-center  border rounded-lg px-2 md:w-56">
         <Search className="size-3.5" />
         <Input className="border-none outline-none bg-transparent shadow-none text-sm" placeholder="search Category" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />

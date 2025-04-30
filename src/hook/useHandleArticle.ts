@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Article } from "@/utils/interface";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface AddArticle {
   title: string;
@@ -19,7 +20,7 @@ export const useHandleArticle = () => {
   const [articleById, setArticleById] = useState<Article>();
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const router = useRouter();
   const getArticleById = async (id: string) => {
     try {
       const response = await axios.get(`${apiUrl}articles/${id}`);
@@ -60,12 +61,15 @@ export const useHandleArticle = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success("Berhasil Menghapus Article", {
+      toast.success("Berhasil Membuat Article", {
         style: {
           backgroundColor: "#34D399",
           color: "#fff",
         },
       });
+      setTimeout(() => {
+        router.push("/dashboard/article");
+      }, 1000);
     } catch (error) {
       toast.error("Gagal Membuat Article", {
         style: {
@@ -112,6 +116,9 @@ export const useHandleArticle = () => {
           color: "#fff",
         },
       });
+      setTimeout(() => {
+        router.push("/dashboard/article");
+      }, 1000);
     } catch (error) {
       toast.error("Gagal Mengupdate Article", {
         style: {

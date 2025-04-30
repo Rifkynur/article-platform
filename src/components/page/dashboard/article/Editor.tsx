@@ -4,11 +4,10 @@
 import { useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import TextAlign from "@tiptap/extension-text-align";
 import clsx from "clsx";
-import { Undo, Redo, Bold, Italic, AlignCenter, AlignLeft, AlignRight, AlignJustify } from "lucide-react";
+import { Undo2, Redo2, Bold, Italic, AlignCenter, AlignLeft, AlignRight, AlignJustify } from "lucide-react";
 
 interface EditorProps {
   value: string;
@@ -52,19 +51,18 @@ export function Editor({ value, onChange }: EditorProps) {
     <div className="border rounded-md p-2 space-y-2">
       <div className="flex gap-2 mb-2 flex-wrap">
         <div>
-          <Button type="button" variant="outline" size="sm" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()}>
-            <Undo />
-          </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()}>
-            Redo
-            <Redo />
-          </Button>
+          <Toggle type="button" variant="outline" size="sm" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} className="px-2 py-1">
+            <Undo2 />
+          </Toggle>
+          <Toggle type="button" variant="outline" size="sm" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()} className="px-2 py-1">
+            <Redo2 />
+          </Toggle>
         </div>
         <div>
-          <Toggle variant={"outline"} onClick={() => editor.chain().focus().toggleBold().run()} className={clsx("px-2 py-1 rounded", editor.isActive("bold") ? "bg-slate-900 text-white" : "bg-white text-slate-900")}>
+          <Toggle variant={"outline"} onClick={() => editor.chain().focus().toggleBold().run()} className="px-2 py-1">
             <Bold />
           </Toggle>
-          <Toggle variant="outline" onClick={() => editor.chain().focus().toggleItalic().run()} className={clsx("px-2 py-1 rounded", editor.isActive("bold") ? "bg-slate-900 text-white" : "bg-white text-slate-900")}>
+          <Toggle variant="outline" onClick={() => editor.chain().focus().toggleItalic().run()} className="px-2 py-1">
             <Italic />
           </Toggle>
         </div>

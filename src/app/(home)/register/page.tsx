@@ -79,7 +79,7 @@ const Page = () => {
                   <div className="relative">
                     <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" {...field} />
                     <button type="button" onClick={handleTogglePassword} className="absolute top-2 right-2 text-gray-500 cursor-pointer">
-                      {showPassword ? <EyeOff /> : <Eye />}
+                      {showPassword ? <Eye /> : <EyeOff />}
                     </button>
                   </div>
                 </FormControl>

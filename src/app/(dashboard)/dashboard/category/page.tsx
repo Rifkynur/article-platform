@@ -61,7 +61,7 @@ const Page = () => {
   }, [pagination.page, searchDebounce]);
   return (
     <div className="min-h-screen">
-      <div className="bg-gray-50 p-2 rounded-t-xl border-slate-200">
+      <div className="bg-gray-50 p-2 rounded-t-xl border-slate-200 lg:p-6">
         <h2 className="text-sm font-medium">Total Category : {totalCategory}</h2>
       </div>
       <FilterCategory searchQuery={searchQuery} setSearchQuery={setSearchQuery} />

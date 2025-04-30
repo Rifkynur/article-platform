@@ -7,15 +7,16 @@ import ContentArticleCardSkeleton from "../listArticel/contentArticel/ContentArt
 type RecomentArticle = {
   articles: Article[];
   isLoading: boolean;
+  link: string;
 };
-const RecomentArticle = ({ articles, isLoading }: RecomentArticle) => {
+const RecomentArticle = ({ articles, isLoading, link }: RecomentArticle) => {
   return (
     <>
       <div className="container pb-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 conatainer">
           {!isLoading
             ? articles.map((article) => {
-                return <ContentArticleCard key={article.id} content={article.content} createdArticle={article.updatedAt} title={article.title} category={article.category} />;
+                return <ContentArticleCard key={article.id} content={article.content} createdArticle={article.updatedAt} title={article.title} category={article.category} link={link} id={article.id} image={article.imageUrl} />;
               })
             : [...Array(3).keys()].map((_, index) => {
                 return <ContentArticleCardSkeleton key={index} />;

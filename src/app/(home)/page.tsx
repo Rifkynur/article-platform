@@ -89,7 +89,7 @@ export default function Home() {
     <>
       <HeroSection searchQuery={searchQuery} setSelectedCategory={setSelectedCategory} setSearchQuery={setSearchQuery} />
 
-      <ContentArticle filteredArticles={filteredArticles} handlePageChange={handlePageChange} pagination={pagination} totalData={totalData} isLoading={isLoading} />
+      <ContentArticle filteredArticles={filteredArticles} handlePageChange={handlePageChange} pagination={pagination} totalData={totalData} isLoading={isLoading} link="article" />
     </>
   );
 }

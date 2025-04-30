@@ -79,9 +79,6 @@ const Page = () => {
     const completeData = { ...data, userId: user?.id, imageUrl: articleById?.imageUrl };
     editArticle(completeData, articleById!.id);
     form.reset();
-    setTimeout(() => {
-      router.push("/dashboard/article");
-    }, 400);
   };
 
   const handleImageClick = () => {

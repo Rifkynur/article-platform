@@ -36,7 +36,7 @@ const TableArticle = ({ filteredArticles, handlePageChange, pagination, isLoadin
     deleteArticle(id);
     setTimeout(() => {
       window.location.reload();
-    }, 100);
+    }, 1000);
   };
   return (
     <>
@@ -65,7 +65,7 @@ const TableArticle = ({ filteredArticles, handlePageChange, pagination, isLoadin
                     <TableCell className="w-[225px] text-sm  text-center text-slate-600">{detailDateFormatter(data.updatedAt)}</TableCell>
                     <TableCell className="flex items-center justify-center w-full h-full">
                       <Button asChild variant={"link"} className="text-blue-600">
-                        <Link href={`/article/${data.id}`}>Preview</Link>
+                        <Link href={`/dashboard/article/${data.id}`}>Preview</Link>
                       </Button>
                       <Button asChild variant={"link"} className="text-blue-600 ">
                         <Link href={`/dashboard/article/edit/${data.id}`}>Edit</Link>
@@ -121,7 +121,7 @@ const TableArticle = ({ filteredArticles, handlePageChange, pagination, isLoadin
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger className="flex items-center gap-2"></DialogTrigger>
-        <DialogContent className="max-w-[400px]">
+        <DialogContent className="lg:w-[400px]">
           <DialogHeader>
             <DialogTitle>Delete Articles</DialogTitle>
             <DialogDescription>Deleting this article is permanent and cannot be undone. All related content will be removed.</DialogDescription>

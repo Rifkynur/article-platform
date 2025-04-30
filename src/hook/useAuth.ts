@@ -67,7 +67,9 @@ export const useAuth = () => {
           color: "#fff",
         },
       });
-      router.push("/login");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
     } catch (error) {
       toast.error("Terjadi Kesalahan, Coba Lagi", {
         style: {
