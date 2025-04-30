@@ -23,9 +23,9 @@ const SidebarDashboard = () => {
 
   return (
     <>
-      <div className={`bg-blue-600 z-30 top-0 bottom-0  py-4 px-3 absolute transition-all duration-200 lg:min-h-screen  lg:static   ${isOpen ? "left-0" : "-left-full"}`}>
+      <div className={`bg-blue-600 z-30 top-0 bottom-0  py-4 px-4 absolute transition-all duration-200 lg:min-h-screen  lg:static   ${isOpen ? "left-0" : "-left-full"}`}>
         <CircleX className="ms-auto mb-2 text-white lg:hidden" onClick={() => setIsOpen()} />
-        <div className="cursor-pointer" onClick={() => router.push("/")}>
+        <div className="cursor-pointer" onClick={() => router.push("/dashboard/article")}>
           <img src="/asset/Logo.png" alt="logo" />
         </div>
         <ul className="text-white flex flex-col gap-4 mt-10">

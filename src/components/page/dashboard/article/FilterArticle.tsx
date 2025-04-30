@@ -25,7 +25,7 @@ const FilterArticle = ({ searchQuery, setSearchQuery, setSelectedCategory }: Fil
           <SelectContent>
             {allCategory.map((data) => {
               return (
-                <SelectItem value={data.name} key={data.id}>
+                <SelectItem value={data.id} key={data.id}>
                   {data.name}
                 </SelectItem>
               );

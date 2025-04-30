@@ -4,52 +4,51 @@ import FilterArticle from "@/components/page/dashboard/article/FilterArticle";
 import TableArticle from "@/components/page/dashboard/article/TableArticle";
 import axios from "axios";
 import { Article } from "@/utils/interface";
+import { useDebounce } from "use-debounce";
 
 const Page = () => {
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-  const [articles, setArticles] = useState<Article[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1, limit: 10 });
-  const [totalArticle, setTotalArticle] = useState<number>();
+  const [totalArticle, setTotalArticle] = useState<number>(0);
+  const [searchDebounce] = useDebounce(searchQuery, 500);
+  const [selectDebounce] = useDebounce(selectedCategory, 500);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const getAllArticle = async () => {
     try {
-      const response = await axios.get(`${apiUrl}articles/`, {
-        params: {
-          page: pagination.page,
-        },
-      });
+      const params: any = {
+        page: pagination.page,
+        limit: pagination.limit,
+      };
+
+      if (searchQuery) {
+        params.title = searchDebounce;
+      }
+
+      if (selectedCategory) {
+        params.category = selectedCategory;
+      }
+
+      const response = await axios.get(`${apiUrl}articles/`, { params });
+
       const totalPages = Math.ceil(response.data.total / pagination.limit);
-      setArticles(response.data.data);
+      setTotalArticle(response.data.total);
+
       setPagination({
         ...pagination,
         totalPages: totalPages,
       });
-      setTotalArticle(response.data.total);
+
       setFilteredArticles(response.data.data);
+      setIsLoading(false);
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
-  };
-  const getFilterArticle = () => {
-    let filtered = articles;
-
-    if (searchQuery) {
-      filtered = filtered.filter((article) => article.title.toLowerCase().includes(searchQuery.toLowerCase()));
-    }
-
-    if (selectedCategory) {
-      filtered = filtered.filter((article) => article.category.name == selectedCategory);
-    }
-
-    setFilteredArticles(filtered);
-
-    setPagination((prev) => ({
-      ...prev,
-      totalPages: Math.ceil(filtered.length / pagination.limit),
-    }));
   };
 
   const handlePageChange = (newPage: number) => {
@@ -57,19 +56,18 @@ const Page = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getAllArticle();
-  }, [pagination.page]);
+    window.scrollTo({ top: 100, behavior: "smooth" });
+  }, [pagination.page, searchDebounce, selectDebounce]);
 
-  useEffect(() => {
-    getFilterArticle();
-  }, [searchQuery, selectedCategory]);
   return (
     <div className="min-h-screen">
       <div className="bg-gray-50 p-2 rounded-t-xl border-slate-200">
         <h2 className="text-sm font-medium">Total Article : {totalArticle}</h2>
       </div>
       <FilterArticle searchQuery={searchQuery} setSearchQuery={setSearchQuery} setSelectedCategory={setSelectedCategory} />
-      <TableArticle filteredArticles={filteredArticles} handlePageChange={handlePageChange} pagination={pagination} />
+      <TableArticle filteredArticles={filteredArticles} handlePageChange={handlePageChange} pagination={pagination} isLoading={isLoading} totalData={totalArticle} />
     </div>
   );
 };

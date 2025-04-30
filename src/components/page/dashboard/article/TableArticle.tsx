@@ -8,6 +8,7 @@ import { useHandleArticle } from "@/hook/useHandleArticle";
 import { Toaster } from "@/components/ui/sonner";
 import { Article } from "@/utils/interface";
 import { detailDateFormatter } from "@/utils/utils";
+import ArticleSkeleton from "./ArticleSkeleton";
 
 interface TableArticle {
   filteredArticles: Article[];
@@ -17,8 +18,10 @@ interface TableArticle {
     totalPages: number;
     limit: number;
   };
+  isLoading: boolean;
+  totalData: number;
 }
-const TableArticle = ({ filteredArticles, handlePageChange, pagination }: TableArticle) => {
+const TableArticle = ({ filteredArticles, handlePageChange, pagination, isLoading, totalData }: TableArticle) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [articleId, setArticleId] = useState<string>("");
   const { deleteArticle } = useHandleArticle();
@@ -38,44 +41,57 @@ const TableArticle = ({ filteredArticles, handlePageChange, pagination }: TableA
   return (
     <>
       <Toaster position="top-right" />
-      <Table className="border-slate-200 bg-gray-50 relative">
-        <TableHeader className="bg-gray-100">
-          <TableRow>
-            <TableHead className="text-center w-[225px]">Thumbnails</TableHead>
-            <TableHead className="text-center w-[225px]">Title</TableHead>
-            <TableHead className="text-center w-[225px]">Category</TableHead>
-            <TableHead className="text-center w-[225px]">Created at</TableHead>
-            <TableHead className="text-center w-[225px]">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredArticles.map((data) => {
-            return (
-              <TableRow key={data.id}>
-                <TableCell className="flex items-center justify-center w-[225px] text-slate-600">
-                  <img src={data.imageUrl || "/asset/articleImage/imageNotFound.webp"} alt="article image" className="object-contain rounded-xl size-[60px]" />
-                </TableCell>
-                <TableCell className="whitespace-normal w-[225px] text-sm text-center text-slate-600">{data.title}</TableCell>
-                <TableCell className="w-[225px] text-sm  text-center text-slate-600">{data.category?.name}</TableCell>
-                <TableCell className="w-[225px] text-sm  text-center text-slate-600">{detailDateFormatter(data.updatedAt)}</TableCell>
-                <TableCell className="flex items-center justify-center w-full h-full">
-                  <Button asChild variant={"link"} className="text-blue-600">
-                    <Link href={`/article/${data.id}`}>Preview</Link>
-                  </Button>
-                  <Button asChild variant={"link"} className="text-blue-600 ">
-                    <Link href={`/dashboard/article/edit/${data.id}`}>Edit</Link>
-                  </Button>
-                  <Button variant={"link"} className="text-red-500" onClick={() => handleOpenModal(data.id)}>
-                    Delete
-                  </Button>
+      {!isLoading ? (
+        <Table className="border-slate-200 bg-gray-50 relative">
+          <TableHeader className="bg-gray-100">
+            <TableRow>
+              <TableHead className="text-center w-[225px]">Thumbnails</TableHead>
+              <TableHead className="text-center w-[225px]">Title</TableHead>
+              <TableHead className="text-center w-[225px]">Category</TableHead>
+              <TableHead className="text-center w-[225px]">Created at</TableHead>
+              <TableHead className="text-center w-[225px]">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredArticles.length > 0 ? (
+              filteredArticles.map((data) => {
+                return (
+                  <TableRow key={data.id}>
+                    <TableCell className="flex items-center justify-center w-[225px] text-slate-600">
+                      <img src={data.imageUrl || "/asset/articleImage/imageNotFound.webp"} alt="article image" className="object-contain rounded-xl size-[60px]" />
+                    </TableCell>
+                    <TableCell className="whitespace-normal w-[225px] text-sm text-center text-slate-600">{data.title}</TableCell>
+                    <TableCell className="w-[225px] text-sm  text-center text-slate-600">{data.category?.name}</TableCell>
+                    <TableCell className="w-[225px] text-sm  text-center text-slate-600">{detailDateFormatter(data.updatedAt)}</TableCell>
+                    <TableCell className="flex items-center justify-center w-full h-full">
+                      <Button asChild variant={"link"} className="text-blue-600">
+                        <Link href={`/article/${data.id}`}>Preview</Link>
+                      </Button>
+                      <Button asChild variant={"link"} className="text-blue-600 ">
+                        <Link href={`/dashboard/article/edit/${data.id}`}>Edit</Link>
+                      </Button>
+                      <Button variant={"link"} className="text-red-500" onClick={() => handleOpenModal(data.id)}>
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center font-semibold text-2xl py-10">
+                  <img src="/asset/notFound.webp" alt="not found" className="md:w-80 mx-auto object-cover" />
+                  Artilce Not Found
                 </TableCell>
               </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+            )}
+          </TableBody>
+        </Table>
+      ) : (
+        [...Array(4).keys()].map((_, index) => <ArticleSkeleton key={index} />)
+      )}
 
-      {filteredArticles.length > 0 && (
+      {totalData > 10 && (
         <div className="flex justify-center mt-8 py-4">
           <nav>
             <ul className="flex space-x-4">

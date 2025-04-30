@@ -18,12 +18,15 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const useHandleArticle = () => {
   const [articleById, setArticleById] = useState<Article>();
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getArticleById = async (id: string) => {
     try {
       const response = await axios.get(`${apiUrl}articles/${id}`);
       setArticleById(response.data);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -152,6 +155,7 @@ export const useHandleArticle = () => {
   }, []);
   return {
     getArticleById,
+    isLoading,
     articleById,
     addArticle,
     deleteArticle,

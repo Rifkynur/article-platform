@@ -83,7 +83,7 @@ const Page = () => {
     form.reset();
     setTimeout(() => {
       router.push("/dashboard/article");
-    }, 100);
+    }, 400);
   };
 
   const handleImageClick = () => {

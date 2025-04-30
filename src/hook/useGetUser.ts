@@ -18,6 +18,7 @@ export const useGetUser = () => {
       });
       setUser(response.data);
     } catch (error) {
+      alert("gabisa");
       console.log(error);
       setLogout();
       router.push("/login");

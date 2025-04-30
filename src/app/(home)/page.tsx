@@ -3,56 +3,56 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import HeroSection from "@/components/page/listArticel/HeroSection/HeroSection";
 import ContentArticle from "@/components/page/listArticel/contentArticel/ContentArticle";
-import { useGetUser } from "@/hook/useGetUser";
 import { Article } from "@/utils/interface";
 import axios from "axios";
+import { useDebounce } from "use-debounce";
+import { useAuthStore } from "../store/useAuthstore";
 
 export default function Home() {
-  const { getUser } = useGetUser();
   const router = useRouter();
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-  const [articles, setArticles] = useState<Article[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1, limit: 10 });
+  const [totalData, setTotalData] = useState<number>(0);
+  const [searchDebounce] = useDebounce(searchQuery, 500);
+  const [selectDebounce] = useDebounce(selectedCategory, 500);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { user } = useAuthStore();
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const getAllArticle = async () => {
     try {
-      const response = await axios.get(`${apiUrl}articles/`, {
-        params: {
-          page: pagination.page,
-        },
-      });
+      const params: any = {
+        page: pagination.page,
+        limit: pagination.limit,
+      };
+
+      if (searchQuery) {
+        params.title = searchDebounce;
+      }
+
+      if (selectedCategory) {
+        params.category = selectedCategory;
+      }
+
+      const response = await axios.get(`${apiUrl}articles/`, { params });
+
       const totalPages = Math.ceil(response.data.total / pagination.limit);
-      setArticles(response.data.data);
+      setTotalData(response.data.total);
+
       setPagination({
         ...pagination,
         totalPages: totalPages,
       });
+
       setFilteredArticles(response.data.data);
+      setIsLoading(false);
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
-  };
-  const getFilterArticle = () => {
-    let filtered = articles;
-
-    if (searchQuery) {
-      filtered = filtered.filter((article) => article.title.toLowerCase().includes(searchQuery.toLowerCase()));
-    }
-
-    if (selectedCategory) {
-      filtered = filtered.filter((article) => article.category.name == selectedCategory);
-    }
-
-    setFilteredArticles(filtered);
-
-    setPagination((prev) => ({
-      ...prev,
-      totalPages: Math.ceil(filtered.length / pagination.limit),
-    }));
   };
 
   const handlePageChange = (newPage: number) => {
@@ -61,26 +61,31 @@ export default function Home() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userData = localStorage.getItem("user");
     if (!token) {
       router.push("/login");
       return;
     }
-    getUser(token);
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      const userRole = parsedData?.state?.user?.role;
+      if (userRole !== "User") {
+        router.push("/dashboard/article");
+      }
+    }
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     getAllArticle();
-  }, [pagination.page]);
-
-  useEffect(() => {
-    getFilterArticle();
-  }, [searchQuery, selectedCategory]);
+    window.scrollTo({ top: 100, behavior: "smooth" });
+  }, [pagination.page, searchDebounce, selectDebounce]);
 
   return (
     <>
       <HeroSection searchQuery={searchQuery} setSelectedCategory={setSelectedCategory} setSearchQuery={setSearchQuery} />
 
-      <ContentArticle filteredArticles={filteredArticles} handlePageChange={handlePageChange} pagination={pagination} />
+      <ContentArticle filteredArticles={filteredArticles} handlePageChange={handlePageChange} pagination={pagination} totalData={totalData} isLoading={isLoading} />
     </>
   );
 }

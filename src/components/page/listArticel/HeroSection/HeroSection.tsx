@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Search } from "lucide-react";
@@ -14,11 +14,6 @@ interface HeroSection {
 
 const HeroSection = ({ searchQuery, setSearchQuery, setSelectedCategory }: HeroSection) => {
   const { allCategory } = useHandleCategory();
-  const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
-
-  useEffect(() => {
-    setSearchQuery(debouncedSearchQuery);
-  }, [debouncedSearchQuery, setSearchQuery]);
 
   return (
     <section
@@ -42,7 +37,7 @@ const HeroSection = ({ searchQuery, setSearchQuery, setSelectedCategory }: HeroS
             <SelectContent>
               {allCategory.map((data) => {
                 return (
-                  <SelectItem value={data.name} key={data.id}>
+                  <SelectItem value={data.id} key={data.id}>
                     {data.name}
                   </SelectItem>
                 );

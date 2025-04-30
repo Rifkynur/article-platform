@@ -14,9 +14,9 @@ type ContentArticleProps = {
 };
 const ContentArticleCard = ({ image, id, createdArticle, category, title, content }: ContentArticleProps) => {
   return (
-    <Link href={`/article/${id}`} className="flex flex-col gap-4 justify-between">
+    <Link href={`/article/${id}`} className="flex flex-col gap-4 justify-between lg:gap-10">
       <div>
-        <img src={image || "/asset/articleImage/imageNotFound.webp"} alt="article image" className="rounded-xl" />
+        <img src={image || "/asset/articleImage/imageNotFound.webp"} alt="article image" className="rounded-xl h-64 w-full object-cover lg:h-60" />
       </div>
       <div className="flex flex-col gap-1.5 lg:gap-2">
         <span className="text-slate-600 text-xs lg:text-sm">{dateFormater(createdArticle)}</span>

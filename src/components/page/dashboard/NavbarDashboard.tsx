@@ -40,7 +40,7 @@ const NavbarDashboard = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem onClick={() => router.push("/dashboard/profile")}>My Account</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push("/dashboard/article")}>Dashboard</DropdownMenuItem>
+
             <DropdownMenuItem onClick={() => setOpenDialog(true)} className="text-red-500">
               <LogOut className="text-red-500" /> Logout
             </DropdownMenuItem>

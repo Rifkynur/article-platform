@@ -47,12 +47,11 @@ const Navbar = () => {
             <DropdownMenuTrigger asChild>
               <div className="flex items-center gap-2 cursor-pointer">
                 <div className=" size-8 rounded-full bg-[#BFDBFE] flex items-center justify-center font-medium text-[#1E3A8A]">{getInitial(user?.username)}</div>
-                <span className="hidden capitalize lg:inline">{user?.username}</span>
+                <span className="hidden capitalize font-medium lg:inline">{user?.username}</span>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => router.push("/profile")}>My Account</DropdownMenuItem>
-              {user?.role === "Admin" && <DropdownMenuItem onClick={() => router.push("/dashboard/article")}>Dashboard</DropdownMenuItem>}
               <DropdownMenuItem onClick={() => setOpenDialog(true)} className="text-red-500">
                 <LogOut className="text-red-500" /> Logout
               </DropdownMenuItem>

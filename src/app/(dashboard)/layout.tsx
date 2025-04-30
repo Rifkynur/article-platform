@@ -3,8 +3,14 @@ import SidebarDashboard from "@/components/page/dashboard/SidebarDashboard";
 import NavbarDashboard from "@/components/page/dashboard/NavbarDashboard";
 import "../globals.css";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Archivo } from "next/font/google";
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -25,7 +31,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <html>
+    <html className={archivo.className}>
       <Head>
         <title>Article | Dashboard</title>
       </Head>

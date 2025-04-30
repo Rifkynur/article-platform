@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import DetailArticle from "@/components/page/DetailArticle/DetailArticle";
 import { Article } from "@/utils/interface";
-import RecomentArticle from "@/components/page/DetailArticle/OtherArticle";
+import RecomentArticle from "@/components/page/DetailArticle/RecomentArticle";
 import { useHandleArticle } from "@/hook/useHandleArticle";
 import { useParams } from "next/navigation";
 import axios from "axios";
@@ -11,7 +11,7 @@ const Page = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [recommendArticles, setRecommendArticles] = useState<Article[]>([]);
   const { id } = useParams();
-  const { articleById, getArticleById } = useHandleArticle();
+  const { articleById, getArticleById, isLoading } = useHandleArticle();
 
   const getRecomendArticle = async () => {
     if (!articleById) return;
@@ -36,10 +36,10 @@ const Page = () => {
     getRecomendArticle();
   }, [articleById]);
   return (
-    <>
-      {articleById && <DetailArticle article={articleById} />}
-      <RecomentArticle articles={recommendArticles} />
-    </>
+    <section className="min-h-screen">
+      {articleById && <DetailArticle isLoading={isLoading} article={articleById} />}
+      <RecomentArticle articles={recommendArticles} isLoading={isLoading} />
+    </section>
   );
 };
 

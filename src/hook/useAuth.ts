@@ -15,32 +15,38 @@ export const useAuth = () => {
   interface registerPayload extends loginPayload {
     role: string;
   }
-
-  const { setLogin, setLogout } = useAuthStore();
   const router = useRouter();
 
-  const logout = () => {
-    try {
-      localStorage.removeItem("token");
-      setLogout();
-      router.push("/login");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { setLogin, setLogout, setUser, user } = useAuthStore((state) => state);
 
   const login = async (data: loginPayload) => {
     try {
       const response = await axios.post(`${apiUrl}auth/login`, data);
       const token = response.data.token;
       setLogin(token);
-      toast.success("Login Berhasil", {
+
+      const userDetail = await axios.get(`${apiUrl}auth/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUser(userDetail.data);
+
+      toast.success(`Selamat datang ${userDetail.data.username} `, {
         style: {
           backgroundColor: "#34D399",
           color: "#fff",
         },
       });
-      router.push("/");
+      setTimeout(() => {
+        if (userDetail.data.role == "Admin") {
+          console.log(userDetail.data.role);
+          router.push("/dashboard/article");
+        } else {
+          router.push("/");
+        }
+      }, 1000);
     } catch (error) {
       toast.error("Username atau Password salah", {
         style: {
@@ -69,6 +75,16 @@ export const useAuth = () => {
           color: "#fff",
         },
       });
+      console.log(error);
+    }
+  };
+
+  const logout = () => {
+    try {
+      localStorage.removeItem("token");
+      setLogout();
+      router.push("/login");
+    } catch (error) {
       console.log(error);
     }
   };
