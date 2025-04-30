@@ -4,9 +4,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Category } from "@/utils/interface";
 import { toast } from "sonner";
-
+import { useAuthStore } from "@/app/store/useAuthstore";
 interface AddCategory {
-  userId: string;
+  userId?: string;
   name: string;
 }
 interface EditCategory {
@@ -19,6 +19,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const useHandleCategory = () => {
   const [allCategory, setAllCategory] = useState<Category[]>([]);
   const [token, setToken] = useState<string | null>(null);
+  const { user } = useAuthStore();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -36,8 +37,13 @@ export const useHandleCategory = () => {
   };
 
   const addCategory = async (data: AddCategory) => {
+    const userId = user?.id;
+    const payload = {
+      ...data,
+      userId,
+    };
     try {
-      await axios.post(`${apiUrl}categories`, data, {
+      await axios.post(`${apiUrl}categories`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

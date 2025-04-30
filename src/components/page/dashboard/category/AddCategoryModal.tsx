@@ -7,13 +7,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuthStore } from "@/app/store/useAuthstore";
 import { Toaster } from "@/components/ui/sonner";
 import { useHandleCategory } from "@/hook/useHandeCategory";
 
 const schema = z.object({
   name: z.string().min(1, "Category field cannot be empty"),
-  userId: z.string().min(1, "User ID cannot be empty"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -24,13 +22,11 @@ interface AddCategoryModalProps {
 }
 
 const AddCategoryModal = ({ open, onOpenChange }: AddCategoryModalProps) => {
-  const { user } = useAuthStore((state) => state);
   const { addCategory } = useHandleCategory();
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: "",
-      userId: user?.id,
     },
   });
 
@@ -38,6 +34,9 @@ const AddCategoryModal = ({ open, onOpenChange }: AddCategoryModalProps) => {
     addCategory(data);
     onOpenChange(false);
     form.reset();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   return (

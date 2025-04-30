@@ -37,7 +37,9 @@ const TableCategory = ({ filteredCategory, handlePageChange, pagination, isLoadi
   };
 
   const handleOnSuccess = () => {
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   return (
